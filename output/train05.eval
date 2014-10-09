@@ -1,0 +1,14 @@
+"""shin:output kanouchishin$ ../script/gradepos.pl ../data/wiki-en-test.pos train05.result
+Accuracy: 90.77% (4142/4563)
+
+Most common mistakes:
+NNS --> NN  46
+NN --> JJ   26
+NNP --> NN  22
+JJ --> DT   22
+JJ --> NN   14
+VBN --> NN  12
+NN --> IN   12
+NN --> DT   10
+VBN --> JJ  10
+NNP --> JJ  8"""

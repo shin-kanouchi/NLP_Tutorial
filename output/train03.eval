@@ -1,0 +1,4 @@
+"""
+shin:train kanouchishin$ ../script/grade-prediction.py ../data/titles-en-test.labeled train03_prediction.result
+Accuracy = 90.967056%
+"""
