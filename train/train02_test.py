@@ -51,8 +51,8 @@ def save_file(entropy_dict, result_file):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-t', '--test', dest='test', default="../data/wiki-en-test.word", help='input test data')
-    parser.add_argument('-m', '--model', dest='model', default="../output/train02_bigram.model", help='writeing model file')
-    parser.add_argument('-r', '--result', dest='result', default="../output/train02_bigram.result", help='writeing result file')
+    parser.add_argument('-m', '--model', dest='model', default="../output/train02_bigram.model", help='writing model file')
+    parser.add_argument('-r', '--result', dest='result', default="../output/train02_bigram.result", help='writing result file')
     args = parser.parse_args()
     entropy_dict = test_bigram(args.model, args.test)
     save_file(entropy_dict, args.result)

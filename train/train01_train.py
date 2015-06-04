@@ -30,7 +30,7 @@ def save_file(word_count, model_file):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-t', '--train', dest='train', default="../data/wiki-en-train.word", help='input training data')
-    parser.add_argument('-m', '--model', dest='model', default="../output/train01_unigram.model", help='writeing model file')
+    parser.add_argument('-m', '--model', dest='model', default="../output/train01_unigram.model", help='writing model file')
     args = parser.parse_args()
     word_count = train_unigram(args.train)
     save_file(word_count, args.model)

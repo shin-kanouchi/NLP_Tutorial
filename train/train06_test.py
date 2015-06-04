@@ -36,39 +36,40 @@ def get_prob(prev_word, curr_word, lm_dict):
     return P2
 
 
-def forward_step(best_score, best_edge, line, lm_dict, tm_dict):
-    for end in range(1, len(line) + 1):
+def forward_step(line, lm_dict, tm_dict, line_len):
+    best_edge = {0: {"<s>": "NULL"}}
+    best_score = {0: {"<s>": 0}}
+    for end in range(1, line_len):
+        best_score[end] = {}
+        best_edge[end] = {}
         for begin in range(end):
             pron = line[begin:end]
             my_tm = {}
-            if pron in tm_dict:
-                my_tm = tm_dict[pron]
+            if pron in tm_dict:  # pron =　しごと
+                my_tm = tm_dict[pron]  # my_tm = {仕事:0.9, 死事:0.1}
             elif len(pron) == 1:
                 my_tm[pron] = 1
             for (curr_word, tm_prob) in my_tm.items():
                 for (prev_word, prev_score) in best_score[begin].items():
                     curr_score = prev_score \
                         - math.log(tm_prob * get_prob(prev_word, curr_word, lm_dict))
-                    if end not in best_score or curr_word not in best_score[end] or curr_score < best_score[end][curr_word]:
-                        if end not in best_score:
-                            best_score[end] = {}
-                        if end not in best_edge:
-                            best_edge[end] = {}
+                    if curr_word not in best_score[end] or curr_score < best_score[end][curr_word]:
                         best_score[end][curr_word] = curr_score
                         best_edge[end][curr_word] = (begin, prev_word)
+                        #print begin, end, prev_word, curr_word, curr_score
     # Treat the last step
-    best_score[len(line) + 1] = {"</s>": float("inf")}
-    best_edge[len(line) + 1] = {"</s>": ""}
+    best_score[line_len] = {"</s>": float("inf")}
+    best_edge[line_len] = {"</s>": ""}
     for (last_word, last_score) in best_score[len(line)].items():
-        if last_score < best_score[len(line) + 1]["</s>"]:
-            best_score[len(line) + 1]["</s>"] = last_score
-            best_edge[len(line) + 1]["</s>"] = (len(line), last_word)
+        if last_score < best_score[line_len]["</s>"]:
+            best_score[line_len]["</s>"] = last_score
+            best_edge[line_len]["</s>"] = (len(line), last_word)
     return best_edge
 
 
-def backward_step(best_edge, line):
+def backward_step(best_edge, line_len):
     words = []
-    next_edge = best_edge[len(line) + 1]["</s>"]
+    next_edge = best_edge[line_len]["</s>"]
     while next_edge != "NULL":
         position, word = next_edge
         words.append(word)
@@ -84,12 +85,9 @@ def test_kkc(lm_file, tm_file, test_file, result_file):
     r_file = open(result_file, "w")
     for line in open(test_file):
         line = line.strip().decode("utf-8")
-        best_edge = {0: {}}
-        best_score = {0: {}}
-        best_edge[0]["<s>"] = "NULL"
-        best_score[0]["<s>"] = 0
-        best_edge = forward_step(best_score, best_edge, line, lm_dict, tm_dict)
-        kanji_list = backward_step(best_edge, line)
+        line_len = len(line) + 1
+        best_edge = forward_step(line, lm_dict, tm_dict, line_len)
+        kanji_list = backward_step(best_edge, line_len)
         r_file.write(' '.join(kanji_list).encode("utf-8") + '\n')
         print ' '.join(kanji_list).encode("utf-8")
 

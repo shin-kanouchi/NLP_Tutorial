@@ -39,8 +39,8 @@ def save_file(word_count, context_count, model_file):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('-r', '--train', dest='train', default="../data/wiki-en-train.word", help='input training data')
-    parser.add_argument('-m', '--model', dest='model', default="../output/train02_bigram.model", help='writeing model file')
+    parser.add_argument('-t', '--train', dest='train', default="../data/wiki-en-train.word", help='input training data')
+    parser.add_argument('-m', '--model', dest='model', default="../output/train02_bigram.model", help='writing model file')
     args = parser.parse_args()
     word_count, context_count = train_bigram(args.train)
     save_file(word_count, context_count, args.model)

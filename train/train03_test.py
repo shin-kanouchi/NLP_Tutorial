@@ -29,8 +29,8 @@ def predict_all(model_file, test_file, result_file):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('-m', '--model', dest='model', default="../output/train03_perceptron.model", help='writeing model file')
+    parser.add_argument('-m', '--model', dest='model', default="../output/train03_perceptron.model", help='writing model file')
     parser.add_argument('-t', '--test', dest='test', default="../data/titles-en-test.word", help='input test data')
-    parser.add_argument('-r', '--result', dest='result', default="../output/train03_prediction.result", help='writeing result file')
+    parser.add_argument('-r', '--result', dest='result', default="../output/train03_prediction.result", help='writing result file')
     args = parser.parse_args()
     predict_all(args.model, args.test, args.result)

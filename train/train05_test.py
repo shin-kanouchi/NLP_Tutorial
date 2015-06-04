@@ -75,8 +75,8 @@ if __name__ == '__main__':
     trans_dict = defaultdict(lambda: .0)
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('-m', '--model', dest='model', default="../output/train05_hmm.model", help='writeing model file')
+    parser.add_argument('-m', '--model', dest='model', default="../output/train05_hmm.model", help='writing model file')
     parser.add_argument('-t', '--test', dest='test', default="../data/wiki-en-test.norm", help='input test data')
-    parser.add_argument('-s', '--result', dest='result', default="../output/train05.result", help='writeing result file')
+    parser.add_argument('-r', '--result', dest='result', default="../output/train05.result", help='writing result file')
     args = parser.parse_args()
     test_hmm(args.model, args.test, args.result)

@@ -35,8 +35,8 @@ def save_file(model_file):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('-r', '--train', dest='train', default="../data/wiki-en-train.norm_pos", help='input model data')
-    parser.add_argument('-m', '--model', dest='model', default="../output/train05_hmm.model", help='writeing model file')
+    parser.add_argument('-t', '--train', dest='train', default="../data/wiki-en-train.norm_pos", help='input model data')
+    parser.add_argument('-m', '--model', dest='model', default="../output/train05_hmm.model", help='writing model file')
     args = parser.parse_args()
     tag_dict = defaultdict(lambda: .0)
     emit_dict = defaultdict(lambda: .0)

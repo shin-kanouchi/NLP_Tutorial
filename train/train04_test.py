@@ -66,6 +66,6 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-m', '--model', dest='model', default="../output/train04_ja_unigram.model", help='input model data')
     parser.add_argument('-t', '--test', dest='test', default="../data/wiki-ja-test.txt", help='input test data')
-    parser.add_argument('-s', '--result', dest='result', default="../output/train04.result", help='writeing result file')
+    parser.add_argument('-r', '--result', dest='result', default="../output/train04.result", help='writing result file')
     args = parser.parse_args()
     word_segment(args.model, args.test, args.result)

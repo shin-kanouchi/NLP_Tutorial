@@ -38,8 +38,8 @@ def save_file(model_file, all_dict):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('-r', '--train', dest='train', default="../data/wiki-en-train.norm_pos", help='input model data')
-    parser.add_argument('-m', '--model', dest='model', default="../output/train05_hmm2.model", help='writeing model file')
+    parser.add_argument('-t', '--train', dest='train', default="../data/wiki-en-train.norm_pos", help='input model data')
+    parser.add_argument('-m', '--model', dest='model', default="../output/train05_hmm2.model", help='writing model file')
     args = parser.parse_args()
     all_dict = train_hmm(args.train)
     save_file(args.model, all_dict)

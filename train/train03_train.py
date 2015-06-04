@@ -50,8 +50,8 @@ def save_file(model_file, weight_dict):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('-r', '--train', dest='train', default="../data/titles-en-train.labeled", help='input training data')
-    parser.add_argument('-m', '--model', dest='model', default="../output/train03_perceptron.model", help='writeing model file')
+    parser.add_argument('-t', '--train', dest='train', default="../data/titles-en-train.labeled", help='input training data')
+    parser.add_argument('-m', '--model', dest='model', default="../output/train03_perceptron.model", help='writing model file')
     args = parser.parse_args()
     w_dict = train_perceptron(args.train)
     save_file(args.model, w_dict)
