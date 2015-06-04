@@ -5,6 +5,7 @@
 import argparse
 from collections import defaultdict
 
+
 def predict_one(weight_dict, phi_dict):
     score = 0
     for name, value in phi_dict.items():
@@ -15,6 +16,7 @@ def predict_one(weight_dict, phi_dict):
     else:
         return -1
 
+
 def create_features(text):
     phi_dict = defaultdict(lambda: 0)
     words = text.split()
@@ -22,24 +24,27 @@ def create_features(text):
         phi_dict['UNI:%s' % (word)] += 1
     return phi_dict
 
+
 def update_weights(weight_dict, phi_dict, y):
     for name, value in phi_dict.items():
         weight_dict[name] += value * y
 
+
 def train_perceptron(train_file):
     weight_dict = defaultdict(lambda: 0)
     for line in open(train_file):
-        y, text  = line.strip().split('\t')
+        y, text = line.strip().split('\t')
         phi_dict = create_features(text)
-        y_       = predict_one(weight_dict, phi_dict)
+        y_ = predict_one(weight_dict, phi_dict)
         print y_, y
         if y_ != int(y):
             update_weights(weight_dict, phi_dict, int(y))
     return weight_dict
 
-def save_file(model_file ,weight_dict):
+
+def save_file(model_file, weight_dict):
     m_file = open(model_file, "w")
-    for k, v in sorted(weight_dict.items(), key = lambda x: x[1]):
+    for k, v in sorted(weight_dict.items(), key=lambda x: x[1]):
         m_file.write('%s\t%f\n' % (k, v))
         print '%s\t%f' % (k, v)
 

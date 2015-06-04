@@ -1,22 +1,24 @@
 #!/usr/bin/python
 #-*-coding:utf-8-*-
 #2014/10/07 15:44:50 Shin Kanouchi
-
+"""2つのプログラムを作成
+train-unigram: 1-gram モデルを学習
+test-unigram: 1-gram モデルを読み込み、
+エントロピーとカバレージを計算"""
 import argparse
 from collections import defaultdict
-"""2つのプログラムを作成
-train-unigram: 1-gram モデルを学習
-test-unigram: 1-gram モデルを読み込み、エントロピーとカバレージを計算"""
+
 
 def train_unigram(train_file):
-    word_count  = defaultdict(lambda:0)
+    word_count = defaultdict(lambda: 0)
     for line in open(train_file):
         item = line.strip().split()
         item.append("</s>")
         for word in item:
-            word_count[word]          += 1
+            word_count[word] += 1
             word_count['TOTAL_count'] += 1
     return word_count
+
 
 def save_file(word_count, model_file):
     m_file = open(model_file, "w")

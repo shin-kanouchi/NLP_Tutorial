@@ -1,13 +1,14 @@
 #!/usr/bin/python
 #-*-coding:utf-8-*-
 #2014/10/07 16:11:34 Shin Kanouchi
-
+"""2つのプログラムを作成
+train-unigram: 1-gram モデルを学習
+test-unigram: 1-gram モデルを読み込み、
+エントロピーとカバレージを計算"""
 import argparse
 import math
 from collections import defaultdict
-"""2つのプログラムを作成
-train-unigram: 1-gram モデルを学習
-test-unigram: 1-gram モデルを読み込み、エントロピーとカバレージを計算"""
+
 
 def import_model(model_file):
     prob_dict = defaultdict(lambda: 0)
@@ -16,28 +17,29 @@ def import_model(model_file):
         prob_dict[word] = float(prob)
     return prob_dict
 
+
 def calc_prob(word, prob_dict):
-    lambda_1   = .95
+    N = 10 ** 6
+    lambda_1 = .95
     lambda_unk = 1 - lambda_1
-    N          = 10 ** 6
     prob = lambda_unk / N
     if word in prob_dict:
         prob += lambda_1 * prob_dict[word]
     return prob
 
-def test_unigram(model_file, test_file):
-    unk       = 0
-    w_count   = 0
-    H         = 0 #エントロピー
-    prob_dict = import_model(model_file)
 
+def test_unigram(model_file, test_file):
+    H = 0  # エントロピー
+    unk = 0  # 未知語
+    w_count = 0
+    prob_dict = import_model(model_file)
     for line in open(test_file, "r"):
         words = line.strip().split()
         words.append("</s>")
         for word in words:
             P = calc_prob(word, prob_dict)
             H += -math.log(P, 2)
-            print H ,'/',w_count
+            print H, '/', w_count
             w_count += 1
             if word not in prob_dict:
                 unk += 1
